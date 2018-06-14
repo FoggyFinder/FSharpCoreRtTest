@@ -3,20 +3,21 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <TailCalls>false</TailCalls>
-    <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
   </PropertyGroup>
 
-  <ItemGroup>
-    <RdXmlFile Include="rd.xml" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FLibrary\FLibrary.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <RdXmlFile Include="rd.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-*" />
   </ItemGroup>
-  
 </Project>
