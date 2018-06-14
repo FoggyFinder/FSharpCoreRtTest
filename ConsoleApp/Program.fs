@@ -1,7 +1,7 @@
 ﻿open System
-open FLibrary
+open FSLibrary
+
 [<EntryPoint>]
 let main argv =
-    Say.helloWorld()
-    // Say.hello "HelloWorld"
+    Console.WriteLine Hello.helloWorld
     0 // return an integer exit code

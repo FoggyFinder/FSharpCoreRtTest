@@ -1,7 +1,4 @@
-namespace FLibrary
+namespace FSLibrary
 
-module Say =
-    let helloWorld() = 
-        printfn "Hello World" 
-    let hello name =
-        printfn "Hello %s" name
+module Hello =
+    let helloWorld = "Hello World" 
