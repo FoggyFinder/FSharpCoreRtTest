@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FSLibrary", "FSLibrary\FSLibrary.fsproj", "{97092CA0-E331-42DE-A651-AE197456A5EB}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "CoreRTConsole", "ConsoleApp\CoreRTConsole.fsproj", "{043667C2-7922-45DF-AA67-28FCF67934E7}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "CoreRTConsole", "CoreRTConsole\CoreRTConsole.fsproj", "{043667C2-7922-45DF-AA67-28FCF67934E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWP", "UWP\UWP.csproj", "{C0877896-0C64-400E-89B8-B955EDAEBFF5}"
 EndProject

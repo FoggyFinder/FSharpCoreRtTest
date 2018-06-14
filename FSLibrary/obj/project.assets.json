@@ -306,6 +306,7 @@
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
+        "C:\\PROGRAMMING\\GITHUB\\CoreRTUWPTest\\NuGet.Config",
         "C:\\Users\\Charles Roddie\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -313,10 +314,8 @@
         "netstandard2.0"
       ],
       "sources": {
-        "C:\\PROGRAMMING\\myscript\\MyScript_ATK-windows-2.2\\Packages": {},
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://nugets.vapolia.fr/nuget/": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://dotnet.myget.org/F/dotnet-core/api/v3/index.json": {}
       },
       "frameworks": {
         "netstandard2.0": {
