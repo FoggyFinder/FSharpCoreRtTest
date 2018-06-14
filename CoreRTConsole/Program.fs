@@ -3,5 +3,5 @@ open FSLibrary
 
 [<EntryPoint>]
 let main argv =
-    Console.WriteLine Hello.helloWorld
+    Hello.sayHello "World"
     0 // return an integer exit code
