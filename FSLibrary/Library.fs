@@ -1,5 +1,7 @@
-namespace FSLibrary
+module FSLibrary
 
-module Hello =
-    let helloWorld = "Hello World" 
-    let sayHello name = printfn "Hello, %s!" name
+// Define a string testString for display.
+
+let sayHello name = sprintf "Hello, %s!" name
+
+let testString = sayHello "World"
