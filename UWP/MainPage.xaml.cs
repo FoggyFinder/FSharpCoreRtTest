@@ -26,7 +26,11 @@ namespace UWP
         {
             this.InitializeComponent();
 
-            this.Content = new TextBlock { Text = FSLibrary.testString() };
+            this.Content =
+                new ScrollViewer
+                {
+                    Content = new TextBlock { Text = FSLibrary.testString() }
+                };
         }
     }
 }
