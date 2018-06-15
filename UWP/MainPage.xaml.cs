@@ -1,5 +1,4 @@
-﻿using FSLibrary;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,7 +26,7 @@ namespace UWP
         {
             this.InitializeComponent();
 
-            this.Content = new TextBox { Text = Hello.helloWorld };
+            this.Content = new TextBlock { Text = FSLibrary.testString };
         }
     }
 }
