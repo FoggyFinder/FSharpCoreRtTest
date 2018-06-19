@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using Microsoft.FSharp.Collections;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace UWP
@@ -26,7 +26,14 @@ namespace UWP
         {
             this.InitializeComponent();
 
-            this.Content = new TextBlock { Text = FSLibrary.testString() };
+            var testData = FSLibrary.SampleData.testData;
+            var json = FSLibrary.Serialization.serializeIndented(testData);
+            jsonTxl.Text = json;
+            var undesData = FSLibrary.Serialization.deserialize<FSharpList<FSLibrary.CoreType.Record>>(json);
+            if (undesData.IsOk)
+                strTxl.Text = undesData.ResultValue.ToString();
+            else
+                strTxl.Text = undesData.ErrorValue;
         }
     }
 }

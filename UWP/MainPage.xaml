@@ -9,6 +9,22 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="3" Text="JSON" 
+                   HorizontalTextAlignment="Center" />
+        <TextBlock Grid.Row="0" Grid.Column="1" Margin="3" Text="ToString()" HorizontalTextAlignment="Center" />
+        <ScrollViewer Grid.Row="1" Grid.Column="0" HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+            <TextBlock  Margin="3" Name="jsonTxl"/>
+        </ScrollViewer>
+        <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+            <TextBlock Margin="3" Name="strTxl"/>
+        </ScrollViewer>
     </Grid>
 </Page>
