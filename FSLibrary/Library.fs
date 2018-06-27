@@ -1,10 +1,4 @@
-module FSLibrary
-
-open LibraryTestFx
-
-// Define a string testString for display.
-
-let testString() = "Hello World"
+namespace FSLibrary
 
 module CoreType = 
     open System

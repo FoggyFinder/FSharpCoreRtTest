@@ -1,8 +1,17 @@
 ﻿open System
 open FSLibrary
+open FSLibrary.CoreType
 
 [<EntryPoint>]
 let main argv =
-    Console.WriteLine (FSLibrary.testString())
-    Console.ReadLine() |> ignore
-    0 // return an integer exit code
+   let testData = SampleData.testData
+   let json = Serialization.serializeIndented testData 
+   Console.WriteLine("Json")
+   Console.WriteLine(json)
+   let undesData = Serialization.deserialize<CoreType.Record list>(json);
+   Console.WriteLine("obj")
+   match undesData with
+   | Ok ok -> Console.WriteLine(ok)
+   | Error error -> Console.WriteLine("Error = {0}", error)
+   Console.ReadLine()
+   0
