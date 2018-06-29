@@ -85,7 +85,7 @@ See simple example in this repo.  In practice much easily just override .ToStrin
 Even simple test doesn't work:
 
 ```fsharp
-
+let testSprintf = sprintf "%s" "Hello World"
 ```
 
 ^ it throws the `System.IndexOutOfRangeException` exception with the follow StackTrace
