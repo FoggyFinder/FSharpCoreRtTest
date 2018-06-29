@@ -63,7 +63,9 @@ It may be not enough. For example if type contains F# list you have to add this 
 
 See example in [JsonSerialization](https://github.com/FoggyFinder/FSharpCoreRtTest/tree/JsonSerialization) brunch.
 
-## Printf / Sprinf
+## Printf / Sprintf
+
+CoreRT
 
 There is a separate issue in visualfsharp repo:
 
@@ -77,6 +79,32 @@ It is happening due to restriction of CoreRT/.NET Native on `MakeGenericType`/`M
 
 Yep, really, you can add specification to rd file and it's will work.
 See simple example in this repo.  In practice much easily just override .ToString for custom types and use `Console.WriteLine` instead of `printfn`.
+
+.NET Native
+
+Even simple test doesn't work:
+
+```fsharp
+
+```
+
+^ it throws the `System.IndexOutOfRangeException` exception with the follow StackTrace
+
+```bash
+   at Internal.Runtime.CompilerHelpers.ThrowHelpers.ThrowIndexOutOfRangeException() in f:\dd\ndp\fxcore\CoreRT\src\System.Private.CoreLib\src\Internal\Runtime\CompilerHelpers\ThrowHelpers.cs:line 25
+   at Internal.TypeSystem.Instantiation.get_GenericParameters(Int32 index) in f:\dd\ndp\fxcore\CoreRT\src\Common\src\TypeSystem\Common\Instantiation.cs:line 29
+   at Internal.Runtime.TypeLoader.NativeLayoutInfoLoadContext.GetType(NativeParser& parser) in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\NativeLayoutInfoLoadContext.cs:line 124
+   at Internal.Runtime.TypeLoader.TypeLoaderEnvironment.GetConstructedTypeFromParserAndNativeLayoutContext(NativeParser& parser, NativeLayoutInfoLoadContext nativeLayoutContext) in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\TypeLoaderEnvironment.cs:line 225
+   at Internal.Runtime.TypeLoader.TypeLoaderEnvironment.GetCallingConverterDataFromMethodSignature_NativeLayout_Common(TypeSystemContext context, RuntimeSignature methodSig, Instantiation typeInstantiation, Instantiation methodInstantiation, Boolean& hasThis, TypeDesc[]& parameters, Boolean[]& parametersWithGenericDependentLayout, NativeReader nativeReader, UInt64[] debuggerPreparedExternalReferences) in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\TypeLoaderEnvironment.SignatureParsing.cs:line 344
+   at Internal.Runtime.TypeLoader.TypeLoaderEnvironment.GetCallingConverterDataFromMethodSignature_NativeLayout(TypeSystemContext context, RuntimeSignature methodSig, Instantiation typeInstantiation, Instantiation methodInstantiation, Boolean& hasThis, TypeDesc[]& parameters, Boolean[]& parametersWithGenericDependentLayout) in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\TypeLoaderEnvironment.SignatureParsing.cs:line 278
+   at Internal.Runtime.TypeLoader.TypeLoaderEnvironment.GetCallingConverterDataFromMethodSignature(TypeSystemContext context, RuntimeSignature methodSig, Instantiation typeInstantiation, Instantiation methodInstantiation, Boolean& hasThis, TypeDesc[]& parameters, Boolean[]& parametersWithGenericDependentLayout) in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\TypeLoaderEnvironment.SignatureParsing.cs:line 261
+   at Internal.Runtime.TypeLoader.CallConversionInfo.EnsureCallConversionInfoLoaded() in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\CallConverterThunk.CallConversionInfo.cs:line 193
+   at Internal.Runtime.TypeLoader.CallConversionInfo.get_ArgIteratorData() in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\CallConverterThunk.CallConversionInfo.cs:line 499
+   at Internal.Runtime.TypeLoader.CallConversionParameters..ctor(CallConversionInfo conversionInfo, IntPtr callerTransitionBlockParam) in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\CallConverterThunk.CallConversionParameters.cs:line 159
+   at Internal.Runtime.TypeLoader.CallConverterThunk.CallConversionThunk(IntPtr callerTransitionBlockParam, IntPtr callConversionId)
+   at Microsoft.FSharp.Core.OptimizedClosures.Invoke@2806.Invoke(T2 u)
+   at <StartupCode$FSLibrary>.$FSLibrary..cctor() 
+```
 
 Related links:
 
