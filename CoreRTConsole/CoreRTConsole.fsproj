@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CSLibrary\CSLibrary.csproj" />
     <ProjectReference Include="..\FSLibrary\FSLibrary.fsproj" />
   </ItemGroup>
 </Project>
