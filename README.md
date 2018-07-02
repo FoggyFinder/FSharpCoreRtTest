@@ -112,12 +112,12 @@ Related links:
 
 ## List of features that are blocked due to restriction above:
 
-* Events
+* Events (works fine in UWP projects)
 * Linq.Expressions
 
 MCVE:
 
-* Events
+* Events 
 
 ```fsharp
 type ChannelChangedHandler = delegate of obj * int -> unit
