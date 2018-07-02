@@ -22,19 +22,17 @@ To test .Net Native:
 
 # Description of current status
 
-## Json serialization
+## NewtonSoft.Json serialization:OK 
+
+**Works in .Net Native by default; requires rd.xml in CoreRT**
 
 .NET Native
 
-Documentation's page - [Serialization and Metadata](https://docs.microsoft.com/en-us/dotnet/framework/net-native/serialization-and-metadata).
-
-But if you use JSON.NET you don't have to edit your rd.file (at least currently) cause specification for this library is included by default.
+Documentation: [Serialization and Metadata](https://docs.microsoft.com/en-us/dotnet/framework/net-native/serialization-and-metadata). But if you use NewtonSoft.Json you don't have to edit your rd.file (at least currently) cause specification for this library is included by default.
 
 CoreRT
 
-There is example ([WebAPI](https://github.com/dotnet/corert/tree/master/samples/WebApi)) where shows using of Json.NET.
-
-So the basic rd file looks like:
+This example ([WebAPI](https://github.com/dotnet/corert/tree/master/samples/WebApi)) shows how to use NewtonSoft.Json. The basic rd file:
 
 ```xml
 <Assembly Name="Newtonsoft.Json">
@@ -63,61 +61,38 @@ It may be not enough. For example if type contains F# list you have to add this 
 
 See example in [JsonSerialization](https://github.com/FoggyFinder/FSharpCoreRtTest/tree/JsonSerialization) brunch.
 
-## Printf / Sprintf
+## Printf / Sprintf: fails on UWP and CoreRT.
 
-CoreRT
+CoreRT: partially fixed by appropriate rd.xml for primitive types. See [Some FSharp.Core constructs don't run on CoreRT #4954](https://github.com/Microsoft/visualfsharp/issues/4954).
 
-There is a separate issue in visualfsharp repo:
+UWP: just override .ToString for custom types and use `String.Format` instead of `sprintf`.
 
-[Some FSharp.Core constructs don't run on CoreRT #4954](https://github.com/Microsoft/visualfsharp/issues/4954).
+More detail for CoreRT:
 
-Short summary:
+Issue results from restriction of CoreRT/.NET Native on `MakeGenericType`/`MakeGenericMethod`.
 
-It is happening due to restriction of CoreRT/.NET Native on `MakeGenericType`/`MakeGenericMethod`.
-
-> RD.XML (a file passed to the CoreRT compiler) can be used to tell the compiler that particular code needs to be generated (even though it statically looks like it isn't needed). If there's a reasonable bound on what MakeGenericType/MakeGenericMethod gets called with, RD.XML is all that's needed to make this work.
-
-Yep, really, you can add specification to rd file and it's will work.
-See simple example in this repo.  In practice much easily just override .ToString for custom types and use `Console.WriteLine` instead of `printfn`.
-
-.NET Native
-
-Even simple test doesn't work:
-
-```fsharp
-let testSprintf = sprintf "%s" "Hello World"
-```
-
-^ it throws the `System.IndexOutOfRangeException` exception with the follow StackTrace
-
-```bash
-   at Internal.Runtime.CompilerHelpers.ThrowHelpers.ThrowIndexOutOfRangeException() in f:\dd\ndp\fxcore\CoreRT\src\System.Private.CoreLib\src\Internal\Runtime\CompilerHelpers\ThrowHelpers.cs:line 25
-   at Internal.TypeSystem.Instantiation.get_GenericParameters(Int32 index) in f:\dd\ndp\fxcore\CoreRT\src\Common\src\TypeSystem\Common\Instantiation.cs:line 29
-   at Internal.Runtime.TypeLoader.NativeLayoutInfoLoadContext.GetType(NativeParser& parser) in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\NativeLayoutInfoLoadContext.cs:line 124
-   at Internal.Runtime.TypeLoader.TypeLoaderEnvironment.GetConstructedTypeFromParserAndNativeLayoutContext(NativeParser& parser, NativeLayoutInfoLoadContext nativeLayoutContext) in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\TypeLoaderEnvironment.cs:line 225
-   at Internal.Runtime.TypeLoader.TypeLoaderEnvironment.GetCallingConverterDataFromMethodSignature_NativeLayout_Common(TypeSystemContext context, RuntimeSignature methodSig, Instantiation typeInstantiation, Instantiation methodInstantiation, Boolean& hasThis, TypeDesc[]& parameters, Boolean[]& parametersWithGenericDependentLayout, NativeReader nativeReader, UInt64[] debuggerPreparedExternalReferences) in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\TypeLoaderEnvironment.SignatureParsing.cs:line 344
-   at Internal.Runtime.TypeLoader.TypeLoaderEnvironment.GetCallingConverterDataFromMethodSignature_NativeLayout(TypeSystemContext context, RuntimeSignature methodSig, Instantiation typeInstantiation, Instantiation methodInstantiation, Boolean& hasThis, TypeDesc[]& parameters, Boolean[]& parametersWithGenericDependentLayout) in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\TypeLoaderEnvironment.SignatureParsing.cs:line 278
-   at Internal.Runtime.TypeLoader.TypeLoaderEnvironment.GetCallingConverterDataFromMethodSignature(TypeSystemContext context, RuntimeSignature methodSig, Instantiation typeInstantiation, Instantiation methodInstantiation, Boolean& hasThis, TypeDesc[]& parameters, Boolean[]& parametersWithGenericDependentLayout) in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\TypeLoaderEnvironment.SignatureParsing.cs:line 261
-   at Internal.Runtime.TypeLoader.CallConversionInfo.EnsureCallConversionInfoLoaded() in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\CallConverterThunk.CallConversionInfo.cs:line 193
-   at Internal.Runtime.TypeLoader.CallConversionInfo.get_ArgIteratorData() in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\CallConverterThunk.CallConversionInfo.cs:line 499
-   at Internal.Runtime.TypeLoader.CallConversionParameters..ctor(CallConversionInfo conversionInfo, IntPtr callerTransitionBlockParam) in f:\dd\ndp\fxcore\CoreRT\src\System.Private.TypeLoader\src\Internal\Runtime\TypeLoader\CallConverterThunk.CallConversionParameters.cs:line 159
-   at Internal.Runtime.TypeLoader.CallConverterThunk.CallConversionThunk(IntPtr callerTransitionBlockParam, IntPtr callConversionId)
-   at Microsoft.FSharp.Core.OptimizedClosures.Invoke@2806.Invoke(T2 u)
-   at <StartupCode$FSLibrary>.$FSLibrary..cctor() 
-```
+> RD.XML (a file passed to the CoreRT compiler) can be used to tell the compiler that particular code needs to be generated (even though it statically looks like it isn't needed). If there's a reasonable bound on what MakeGenericType/MakeGenericMethod gets called with, RD.XML is all that's needed to make this work. See simple example in this repo.
 
 Related links:
 
 [Dynamic programming differences](https://docs.microsoft.com/en-us/dotnet/framework/net-native/migrating-your-windows-store-app-to-net-native#dynamic-programming-differences)
 
-## List of features that are blocked due to restriction above:
+## F# Quotations to expressions: fails on CoreRT and UWP
 
-* Events (works fine in UWP projects)
-* Linq.Expressions
+This is useful for LINQ queries from F#.
 
-MCVE:
+Workaround: use an alternative to LINQ (e.g. SQL), or use LINQ from C#.
 
-* Events 
+E.g.
+
+```fsharp
+let expr = 
+    <@ System.Func<int,int>(fun i -> i + 1) @>
+    |> Microsoft.FSharp.Linq.RuntimeHelpers.LeafExpressionConverter.QuotationToExpression
+    :?> System.Linq.Expressions.Expression<int>
+```
+
+## Events: work on UWP, fail on CoreRT
 
 ```fsharp
 type ChannelChangedHandler = delegate of obj * int -> unit
@@ -152,40 +127,3 @@ Unhandled Exception: System.TypeInitializationException: A type initializer thre
    at Program.main(String[]) + 0xd
    at CoreRTConsole!<BaseAddress>+0x270f6a
 ```
-
-* Linq.Expressions
-
-```csharp
-public static class Ext
-{
-    public static IEnumerable<U> Map<T, U>(this IEnumerable<T> seq, Expression<Func<T,U>> expression)
-    {
-        return seq.Select(expression.Compile());
-    }
-}
-```
-
-```fsharp
-[| 0..5 |].Map(fun x -> x * 2)
-|> Seq.iter(fun v -> Console.WriteLine(v))
-```
-
-```bash
-Unhandled Exception: EETypeRva:0x0063A160: MakeGenericMethod() cannot create this generic method instantiation because the instantiation was not metadata-enabled: 'Microsoft.FSharp.Core.Operators.op_Multiply<System.Int32,System.Int32,System.Int32>(System.Int32,System.Int32)' For more information, please visit http://go.microsoft.com/fwlink/?LinkID=616868
-   at CoreRTConsole!<BaseAddress>+0x13e2d
-   at CoreRTConsole!<BaseAddress>+0x8d6af
-   at CoreRTConsole!<BaseAddress>+0x8900e
-   at CoreRTConsole!<BaseAddress>+0x202aca
-   at Microsoft.FSharp.Quotations.PatternsModule.bindModuleDefn@1508(ExprConstInfo, FSharpList`1) + 0x1f
-   at Microsoft.FSharp.Quotations.PatternsModule.u_Expr@1415-4.Invoke(PatternsModule.BindingEnv) + 0xad
-   at Microsoft.FSharp.Quotations.PatternsModule.u_Expr@1429-6.Invoke(PatternsModule.BindingEnv) + 0x37
-   at Microsoft.FSharp.Primitives.Basics.List.map[T, TResult](FSharpFunc`2, FSharpList`1) + 0x2d
-   at Microsoft.FSharp.Quotations.PatternsModule.u_Expr@1415-4.Invoke(PatternsModule.BindingEnv) + 0x36
-   at Microsoft.FSharp.Quotations.PatternsModule.u_Expr@1437-9.Invoke(PatternsModule.BindingEnv) + 0x1c
-   at Microsoft.FSharp.Quotations.PatternsModule.deserialize(Type, Type[], Type[], FSharpExpr[], Byte[]) + 0x8a
-   at Program.expTest() + 0x1ae
-   at Program.main(String[]) + 0xd
-   at CoreRTConsole!<BaseAddress>+0x270ee6
-```
-
-
