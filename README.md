@@ -67,13 +67,9 @@ It may be not enough. For example if type contains F# list you have to add this 
 
 It is possible that rd.xml will enable sprintf on primitive types but we have not managed to get this working yet.
 
-**CoreRT:** partially fixed by appropriate rd.xml for primitive types. See [Some FSharp.Core constructs don't run on CoreRT #4954](https://github.com/Microsoft/visualfsharp/issues/4954). More detail:
+**CoreRT:** partially fixed by appropriate rd.xml for primitive types. See [Some FSharp.Core constructs don't run on CoreRT #4954](https://github.com/Microsoft/visualfsharp/issues/4954). The issue results from CoreRT/.NET Native restricting `MakeGenericType`/`MakeGenericMethod`. RD.XML (a file passed to the CoreRT compiler) can be used to tell the compiler that particular code needs to be generated (even though it statically looks like it isn't needed). If there's a reasonable bound on what MakeGenericType/MakeGenericMethod gets called with, RD.XML is all that's needed to make this work. See the simple example in this repo.
 
-The issue results from CoreRT/.NET Native restricting `MakeGenericType`/`MakeGenericMethod`. RD.XML (a file passed to the CoreRT compiler) can be used to tell the compiler that particular code needs to be generated (even though it statically looks like it isn't needed). If there's a reasonable bound on what MakeGenericType/MakeGenericMethod gets called with, RD.XML is all that's needed to make this work. See simple example in this repo.
-
-Related links:
-
-[Dynamic programming differences](https://docs.microsoft.com/en-us/dotnet/framework/net-native/migrating-your-windows-store-app-to-net-native#dynamic-programming-differences)
+Related link: [Dynamic programming differences](https://docs.microsoft.com/en-us/dotnet/framework/net-native/migrating-your-windows-store-app-to-net-native#dynamic-programming-differences)
 
 ## F# Quotation to Expression: fails on CoreRT and UWP
 
