@@ -26,8 +26,29 @@ module TestJsonSerialiation =
     let idTree = {Id = 3; Tree = tree}
     let serializedIdTree = JsonConvert.SerializeObject(idTree)
     let serializedIdTree' = serializedIdTree |> JsonConvert.DeserializeObject<IdTree> |> JsonConvert.SerializeObject
-    s.Append(serializedIdTree) |> ignore
+    s.AppendLine(serializedIdTree) |> ignore
     Assert.AreEqual(serializedIdTree',serializedIdTree)
+
+module TailRecursion =
+    // from https://gist.github.com/dsyme/82c49d5cb63d04f3b2b3502d51e6277c
+    let HugeInt = 100
+    
+    // Mutually recurisve tail call, compiler will emit tail instruction
+    // does not work on UWP when HugeInt = 10000000
+    // works when HugeInt = 100
+    let rec mutualTail1IsOdd x = 
+        match x with
+        | 1 -> true
+        | n -> mutualTail1IsEven (x - 1)
+    and mutualTail1IsEven x =
+        match x with
+        | 1 -> false
+        | 0 -> true
+        | n -> mutualTail1IsOdd (x - 1)
+    let odd = mutualTail1IsOdd HugeInt
+    let even = mutualTail1IsEven HugeInt
+    s.AppendLine("HugeInt is odd: " + odd.ToString()) |> ignore
+    s.AppendLine("HugeInt is even: " + even.ToString()) |> ignore
 
 type ChannelChangedHandler = delegate of obj * int -> unit
 type C() =  
