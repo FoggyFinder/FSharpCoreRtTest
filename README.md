@@ -24,11 +24,11 @@ To test .Net Native:
 
 ## NewtonSoft.Json serialization: OK on UWP and CoreRT
 
-.NET Native: works by default.
+**.NET Native:** works by default.
 
 Documentation: [Serialization and Metadata](https://docs.microsoft.com/en-us/dotnet/framework/net-native/serialization-and-metadata). But if you use NewtonSoft.Json you don't have to edit your rd.file (at least currently) cause specification for this library is included by default.
 
-CoreRT: requires rd.xml.
+**CoreRT:** requires rd.xml.
 
 This example ([WebAPI](https://github.com/dotnet/corert/tree/master/samples/WebApi)) shows how to use NewtonSoft.Json. The basic rd file:
 
@@ -61,13 +61,13 @@ See example in [JsonSerialization](https://github.com/FoggyFinder/FSharpCoreRtTe
 
 ## Printf / Sprintf: fails on UWP and CoreRT.
 
-CoreRT: partially fixed by appropriate rd.xml for primitive types. See [Some FSharp.Core constructs don't run on CoreRT #4954](https://github.com/Microsoft/visualfsharp/issues/4954).
+**.NET Native:** just override .ToString for custom types and use `String.Format` instead of `sprintf`.
 
-UWP: just override .ToString for custom types and use `String.Format` instead of `sprintf`.
+It is possible that rd.xml will enable sprintf on primitive types but we have not managed to get this working yet.
 
-More detail for CoreRT:
+**CoreRT:** partially fixed by appropriate rd.xml for primitive types. See [Some FSharp.Core constructs don't run on CoreRT #4954](https://github.com/Microsoft/visualfsharp/issues/4954). More detail:
 
-Issue results from restriction of CoreRT/.NET Native on `MakeGenericType`/`MakeGenericMethod`. RD.XML (a file passed to the CoreRT compiler) can be used to tell the compiler that particular code needs to be generated (even though it statically looks like it isn't needed). If there's a reasonable bound on what MakeGenericType/MakeGenericMethod gets called with, RD.XML is all that's needed to make this work. See simple example in this repo.
+The issue results from CoreRT/.NET Native restricting `MakeGenericType`/`MakeGenericMethod`. RD.XML (a file passed to the CoreRT compiler) can be used to tell the compiler that particular code needs to be generated (even though it statically looks like it isn't needed). If there's a reasonable bound on what MakeGenericType/MakeGenericMethod gets called with, RD.XML is all that's needed to make this work. See simple example in this repo.
 
 Related links:
 
@@ -79,7 +79,7 @@ This is useful for LINQ queries from F#.
 
 Workaround: use an alternative to LINQ (e.g. SQL), or use LINQ from C#.
 
-E.g.
+E.g. the following code fails:
 
 ```fsharp
 let expr = 
@@ -88,7 +88,9 @@ let expr =
     :?> System.Linq.Expressions.Expression<int>
 ```
 
-## Events: work on UWP, fail on CoreRT
+## F# Events: work on UWP, fail on CoreRT
+
+This needs more investigation on CoreRT.
 
 ```fsharp
 type ChannelChangedHandler = delegate of obj * int -> unit
