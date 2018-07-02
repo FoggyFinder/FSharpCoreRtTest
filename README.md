@@ -63,7 +63,7 @@ It may be not enough. For example if type contains F# list you have to add this 
 </Assembly>
 ```
 
-## Printf / Sprintf: fails on UWP and CoreRT.
+## Sprintf, and .ToString() on record types and DUs: these fail on UWP and CoreRT.
 
 **.NET Native:** just override .ToString for custom types and use `String.Format` instead of `sprintf`.
 
@@ -92,10 +92,9 @@ let expr =
     :?> System.Linq.Expressions.Expression<int>
 ```
 
-## .tail instructions
+## The .tail instruction: ignored on UWP
 
-It appears that .Net Native ignores tail instructions, while CoreRT implements them.
-Lack of support for .tail calls on UWP does not break typical F# code. It is therefore recommended not to create code in UWP that is heavily dependent on tail call optimization.
+It appears that .Net Native ignores tail instructions, while CoreRT implements them. Lack of support for .tail calls on UWP does not break typical F# code. It is therefore recommended not to create code in UWP that is heavily dependent on tail call optimization.
 
 ## F# Event: works on UWP, fails on CoreRT
 
