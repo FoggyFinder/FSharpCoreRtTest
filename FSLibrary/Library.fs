@@ -52,11 +52,17 @@ module TailRecursion =
     s.AppendLine("HugeInt is odd: " + odd.ToString()) |> ignore
     s.AppendLine("HugeInt is even: " + even.ToString()) |> ignore
 
-//type ChannelChangedHandler = delegate of obj * int -> unit
-//type C() =  
-//    let channelChanged = new Event<ChannelChangedHandler,_>()
-//    [<CLIEvent>]    
-//    member self.ChannelChanged = channelChanged.Publish
-//    member self.ChangeChannel(n) = channelChanged.Trigger(self,n)
+//// works on UWP but not CoreRT.
+//module FSharpEventTest =
+//    type ChannelChangedHandler = delegate of obj * int -> unit
+//    type C() =  
+//        let channelChanged = new Event<ChannelChangedHandler,_>()
+//        [<CLIEvent>]    
+//        member self.ChannelChanged = channelChanged.Publish
+//        member self.ChangeChannel(n) = channelChanged.Trigger(self,n)
+//    let c = C()
+//    let h1 = ChannelChangedHandler(fun _ ch -> s.AppendLine("Channel = " + ch.ToString()) |> ignore )
+//    c.ChannelChanged.AddHandler(h1)
+//    c.ChangeChannel(3)
 
 let testString = s.ToString()
