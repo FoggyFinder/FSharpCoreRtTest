@@ -24,9 +24,7 @@ To test .Net Native:
 
 We have identified several issues while testing. The main code tested was the F# cheatsheet, a production F# Xamarin.Forms app, and tail recursion and tail recursion and nested generics.
 
-The code demonstrating the issues found is here: https://github.com/FoggyFinder/FSharpCoreRtTest/tree/MainIssues
-The F# cheatsheet code is in another branch.
-Please test further and give your results and conclusisions here.
+The code demonstrating the issues found is here: https://github.com/FoggyFinder/FSharpCoreRtTest/tree/MainIssues . Please test further and give your results and conclusisions here.
 
 ## NewtonSoft.Json serialization: OK on UWP and CoreRT
 
