@@ -38,19 +38,19 @@ module TailRecursion =
     // works on CoreRT when HugeInt = 10000000
     // works on UWP and CoreRT when HugeInt = 100
     // Conclusion: UWP ignores .tail while CoreRT implements it.
-    let rec mutualTail1IsOdd x = 
-        match x with
-        | 1 -> true
-        | n -> mutualTail1IsEven (x - 1)
-    and mutualTail1IsEven x =
-        match x with
-        | 1 -> false
-        | 0 -> true
-        | n -> mutualTail1IsOdd (x - 1)
-    let odd = mutualTail1IsOdd HugeInt
-    let even = mutualTail1IsEven HugeInt
-    s.AppendLine("HugeInt is odd: " + odd.ToString()) |> ignore
-    s.AppendLine("HugeInt is even: " + even.ToString()) |> ignore
+    //let rec mutualTail1IsOdd x = 
+    //    match x with
+    //    | 1 -> true
+    //    | n -> mutualTail1IsEven (x - 1)
+    //and mutualTail1IsEven x =
+    //    match x with
+    //    | 1 -> false
+    //    | 0 -> true
+    //    | n -> mutualTail1IsOdd (x - 1)
+    //let odd = mutualTail1IsOdd HugeInt
+    //let even = mutualTail1IsEven HugeInt
+    //s.AppendLine("HugeInt is odd: " + odd.ToString()) |> ignore
+    //s.AppendLine("HugeInt is even: " + even.ToString()) |> ignore
 
 //// works on UWP but not CoreRT.
 //module FSharpEventTest =
@@ -64,5 +64,14 @@ module TailRecursion =
 //    let h1 = ChannelChangedHandler(fun _ ch -> s.AppendLine("Channel = " + ch.ToString()) |> ignore )
 //    c.ChannelChanged.AddHandler(h1)
 //    c.ChangeChannel(3)
+
+
+//nested generics test, works on UWP but stackoverflowexception on CoreRT
+module NestedGenerics =
+    [<AllowNullLiteral>]
+    type C<'T> = class end
+    let rec f<'T>(x:int) : int = if x < 100 then f<C<'T>>(x+1) else 1
+    let n = f<string>(0)
+    s.AppendLine("n is "+ n.ToString()) |> ignore
 
 let testString = s.ToString()
