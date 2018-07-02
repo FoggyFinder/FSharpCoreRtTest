@@ -32,7 +32,7 @@ Please test further and give your results and conclusisions here.
 
 **.NET Native:** works by default.
 
-Documentation: [Serialization and Metadata](https://docs.microsoft.com/en-us/dotnet/framework/net-native/serialization-and-metadata). But if you use NewtonSoft.Json you don't have to edit your rd.file (at least currently) cause specification for this library is included by default.
+Documentation: [Serialization and Metadata](https://docs.microsoft.com/en-us/dotnet/framework/net-native/serialization-and-metadata). But if you use NewtonSoft.Json you don't have to edit your rd.file (at least currently) because the specification for this library is included by default.
 
 **CoreRT:** requires rd.xml.
 
