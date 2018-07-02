@@ -73,7 +73,7 @@ Related links:
 
 [Dynamic programming differences](https://docs.microsoft.com/en-us/dotnet/framework/net-native/migrating-your-windows-store-app-to-net-native#dynamic-programming-differences)
 
-## F# Quotation to expression: fails on CoreRT and UWP
+## F# Quotation to Expression: fails on CoreRT and UWP
 
 This is useful for LINQ queries from F#.
 
