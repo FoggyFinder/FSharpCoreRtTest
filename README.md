@@ -88,6 +88,11 @@ let expr =
     :?> System.Linq.Expressions.Expression<int>
 ```
 
+## .tail instructions
+
+It appears that .Net Native ignores tail instructions, while CoreRT implements them.
+Lack of support for .tail calls on UWP does not break typical F# code. It is therefore recommended not to create code in UWP that is heavily dependent on tail call optimization.
+
 ## F# Event: works on UWP, fails on CoreRT
 
 This needs more investigation on CoreRT.
