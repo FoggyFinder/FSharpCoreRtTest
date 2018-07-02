@@ -22,15 +22,13 @@ To test .Net Native:
 
 # Description of current status
 
-## NewtonSoft.Json serialization:OK 
+## NewtonSoft.Json serialization: OK on UWP and CoreRT
 
-**Works in .Net Native by default; requires rd.xml in CoreRT**
-
-.NET Native
+.NET Native: works by default.
 
 Documentation: [Serialization and Metadata](https://docs.microsoft.com/en-us/dotnet/framework/net-native/serialization-and-metadata). But if you use NewtonSoft.Json you don't have to edit your rd.file (at least currently) cause specification for this library is included by default.
 
-CoreRT
+CoreRT: requires rd.xml.
 
 This example ([WebAPI](https://github.com/dotnet/corert/tree/master/samples/WebApi)) shows how to use NewtonSoft.Json. The basic rd file:
 
