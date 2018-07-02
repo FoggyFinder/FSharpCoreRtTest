@@ -20,7 +20,7 @@ To test .Net Native:
 
 2. Run the UWP project in release mode.
 
-# Description of current status
+# Description of current issues
 
 We have identified several issues while testing. The main code tested was the F# cheatsheet, a production F# Xamarin.Forms app, and tail recursion and tail recursion and nested generics.
 
