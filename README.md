@@ -69,9 +69,7 @@ UWP: just override .ToString for custom types and use `String.Format` instead of
 
 More detail for CoreRT:
 
-Issue results from restriction of CoreRT/.NET Native on `MakeGenericType`/`MakeGenericMethod`.
-
-> RD.XML (a file passed to the CoreRT compiler) can be used to tell the compiler that particular code needs to be generated (even though it statically looks like it isn't needed). If there's a reasonable bound on what MakeGenericType/MakeGenericMethod gets called with, RD.XML is all that's needed to make this work. See simple example in this repo.
+Issue results from restriction of CoreRT/.NET Native on `MakeGenericType`/`MakeGenericMethod`. RD.XML (a file passed to the CoreRT compiler) can be used to tell the compiler that particular code needs to be generated (even though it statically looks like it isn't needed). If there's a reasonable bound on what MakeGenericType/MakeGenericMethod gets called with, RD.XML is all that's needed to make this work. See simple example in this repo.
 
 Related links:
 
