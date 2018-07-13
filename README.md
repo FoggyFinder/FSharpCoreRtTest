@@ -83,7 +83,6 @@ E.g. the following code fails:
 let expr = 
     <@ System.Func<int,int>(fun i -> i + 1) @>
     |> Microsoft.FSharp.Linq.RuntimeHelpers.LeafExpressionConverter.QuotationToExpression
-    :?> System.Linq.Expressions.Expression<int>
 ```
 
 ## The .tail instruction: ignored on UWP
